@@ -5,6 +5,7 @@ from os import system
 from time import sleep
 from shutil import get_terminal_size
 from math import floor
+from subprocess import run
 
 def format_time(DURATION):
     seconds = DURATION % 60
@@ -39,3 +40,5 @@ for i in range(DURATION):
     sleep(1)
 
 system('clear')
+
+run(["paplay", "/usr/share/sounds/freedesktop/stereo/complete.oga"])

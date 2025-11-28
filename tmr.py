@@ -6,6 +6,7 @@ from time import sleep
 from shutil import get_terminal_size
 from math import floor
 from subprocess import run
+import termios
 
 def format_time(DURATION):
     seconds = DURATION % 60
@@ -20,8 +21,6 @@ def center_termnl_output(text, termnl_width, termnl_height):
         text = "\n" + text
 
     return text
-
-
 
 DURATION = int(sys.argv[1]) * 60
 
@@ -40,5 +39,6 @@ for i in range(DURATION):
     sleep(1)
 
 system('clear')
+termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
 run(["paplay", "/usr/share/sounds/freedesktop/stereo/complete.oga"])

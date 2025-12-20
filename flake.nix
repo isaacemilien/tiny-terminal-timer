@@ -8,17 +8,27 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
     in {
-      packages.${system}.default = pkgs.python3Packages.buildPythonApplication {
-        pname = "playlist-select";
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
+        pname = "tiny-terminal-timer";
         version = "0.1.0";
         src = ./.;
         format = "other";
 
+        buildPhase = ''
+          gcc -O2 -Wall -Wextra -o tmr tmr.c
+        '';
+
         installPhase = ''
           mkdir -p $out/bin
-          cp tmr.py $out/bin/tmr
-          chmod +x $out/bin/tmr
+          cp tmr $out/bin/
         '';
+      };
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs;
+        [
+          gcc
+        ];
       };
     };
 }
